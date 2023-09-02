@@ -79,8 +79,8 @@ bool reve::pcl2msgToPcl(const sensor_msgs::PointCloud2& pcl_msg, pcl::PointCloud
     for (const auto& p : scan_mmwave)
     {
       RadarPointCloudType p_;
-      p_.x             = -p.y;
-      p_.y             = p.x;
+      p_.x             = p.x;
+      p_.y             = p.y;
       p_.z             = p.z;
       p_.snr_db        = p.intensity;
       p_.v_doppler_mps = p.velocity;

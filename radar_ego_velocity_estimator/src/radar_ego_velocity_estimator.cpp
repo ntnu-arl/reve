@@ -114,8 +114,8 @@ bool RadarEgoVelocityEstimator::estimate(const sensor_msgs::PointCloud2& radar_s
       const auto target = radar_scan->at(i);
       const Real r      = Vector3(target.x, target.y, target.z).norm();
 
-      Real azimuth   = std::atan2(target.y, target.x) - M_PI_2;
-      Real elevation = std::atan2(std::sqrt(target.x * target.x + target.y * target.y), target.z) - M_PI_2;
+      Real azimuth   = std::atan2(target.y, target.x);
+      Real elevation = std::atan2(target.z, std::sqrt(target.x * target.x + target.y * target.y));
 
       if (r > config_.min_dist && r < config_.max_dist && target.snr_db > config_.min_db &&
           std::fabs(azimuth) < angles::from_degrees(config_.azimuth_thresh_deg) &&
