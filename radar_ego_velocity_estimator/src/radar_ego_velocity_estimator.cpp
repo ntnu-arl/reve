@@ -290,13 +290,29 @@ bool RadarEgoVelocityEstimator::solve3DLsq(const Matrix& radar_data, Vector3& v_
         sigma_v_r = sigma_v_r.array().sqrt();
         if (sigma_v_r.x() < config_.max_sigma_x && sigma_v_r.y() < config_.max_sigma_y &&
             sigma_v_r.z() < config_.max_sigma_z)
+        {
           return true;
+        }
+        else
+        {
+          ROS_WARN_STREAM(kPrefix << "Sigma over threshold (" << config_.max_sigma_x << ', ' << config_.max_sigma_y
+                                  << ', ' << config_.max_sigma_z << ')' << "[" << sigma_v_r.x() << ', ' << sigma_v_r.y()
+                                  << ', ' << sigma_v_r.z() << ']');
+        }
+      }
+      else
+      {
+        ROS_WARN_STREAM(kPrefix << "Negative covar diagonal");
       }
     }
     else
     {
       return true;
     }
+  }
+  else
+  {
+    ROS_WARN_STREAM(kPrefix << "Condition too high " << cond);
   }
 
   return false;
