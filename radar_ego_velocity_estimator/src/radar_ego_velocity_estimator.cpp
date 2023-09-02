@@ -295,9 +295,9 @@ bool RadarEgoVelocityEstimator::solve3DLsq(const Matrix& radar_data, Vector3& v_
         }
         else
         {
-          ROS_WARN_STREAM(kPrefix << "Sigma over threshold (" << config_.max_sigma_x << ', ' << config_.max_sigma_y
-                                  << ', ' << config_.max_sigma_z << ')' << "[" << sigma_v_r.x() << ', ' << sigma_v_r.y()
-                                  << ', ' << sigma_v_r.z() << ']');
+          ROS_WARN_STREAM(kPrefix << "Sigma over threshold (" << config_.max_sigma_x << ", " << config_.max_sigma_y
+                                  << ", " << config_.max_sigma_z << ')' << "[" << sigma_v_r.x() << ", " << sigma_v_r.y()
+                                  << ", " << sigma_v_r.z() << ']');
         }
       }
       else

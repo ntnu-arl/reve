@@ -173,7 +173,11 @@ bool RadarEgoVelocityEstimator::configure(ConfigContainingRadarEgoVelocityEstima
 
   setRansacIter();
 
-  ROS_INFO_STREAM(kPrefix << "Number of Ransac iterations: " << ransac_iter_);
+  if (config_.use_ransac){
+    ROS_INFO_STREAM(kPrefix << "Number of Ransac iterations: " << ransac_iter_);
+  }else{
+    ROS_INFO_STREAM(kPrefix << "Running without RANSAC");
+  }
 
   return true;
 }
