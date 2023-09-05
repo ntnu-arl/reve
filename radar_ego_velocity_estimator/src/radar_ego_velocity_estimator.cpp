@@ -265,7 +265,7 @@ bool RadarEgoVelocityEstimator::solve3DLsq(const Matrix& radar_data, Vector3& v_
   Eigen::JacobiSVD<Matrix> svd(HTH);
   Real cond = svd.singularValues()(0) / svd.singularValues()(svd.singularValues().size() - 1);
 
-  if (std::fabs(cond) < 1.0e3)
+  if (std::fabs(cond) < config_.max_r_cond)
   {
     if (config_.use_cholesky_instead_of_bdcsvd)
       v_r = (HTH).ldlt().solve(H.transpose() * y);
@@ -295,9 +295,9 @@ bool RadarEgoVelocityEstimator::solve3DLsq(const Matrix& radar_data, Vector3& v_
         }
         else
         {
-          ROS_WARN_STREAM(kPrefix << "Sigma over threshold (" << config_.max_sigma_x << ", " << config_.max_sigma_y
-                                  << ", " << config_.max_sigma_z << ')' << "[" << sigma_v_r.x() << ", " << sigma_v_r.y()
-                                  << ", " << sigma_v_r.z() << ']');
+          ROS_WARN_STREAM(kPrefix << "Sigma over threshold" << "[" << sigma_v_r.x() << ", " << sigma_v_r.y()
+                                  << ", " << sigma_v_r.z() << "] > [" << config_.max_sigma_x << ", " << config_.max_sigma_y
+                                  << ", " << config_.max_sigma_z << "]");
         }
       }
       else
@@ -312,7 +312,7 @@ bool RadarEgoVelocityEstimator::solve3DLsq(const Matrix& radar_data, Vector3& v_
   }
   else
   {
-    ROS_WARN_STREAM(kPrefix << "Condition too high " << cond);
+    ROS_WARN_STREAM(kPrefix << "Condition too high " << cond << " > " << config_.max_r_cond);
   }
 
   return false;
