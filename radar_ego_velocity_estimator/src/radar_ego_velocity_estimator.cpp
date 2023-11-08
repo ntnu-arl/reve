@@ -312,7 +312,7 @@ bool RadarEgoVelocityEstimator::solve3DLsq(const Matrix& radar_data, Vector3& v_
   }
   else
   {
-    ROS_WARN_STREAM(kPrefix << "Condition too high " << cond << " > " << config_.max_r_cond);
+    // ROS_WARN_STREAM(kPrefix << "Condition too high " << cond << " > " << config_.max_r_cond);
   }
 
   return false;
